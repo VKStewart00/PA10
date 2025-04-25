@@ -97,12 +97,21 @@ sw_films[[1]][["starships"]]
 So if we can count the number of webpage links that would tell us the number of starships that appear in that movie. Here are three different ways to count the number of urls under `starships`. Can you think of another? (it is ok if you can't). Compare and contrast how the three codes work differently to do the same thing.
 
 ```{r}
-sw_films %>% map(., "starships") %>% map_dbl(~length(.))
+sw_films %>% map(., "starships")%>% map_dbl(~length(.))
+
 map_dbl(sw_films, ~length(.x$starships))
+
 sw_films %>% map_dbl(., ~length(.x$starships))
+
+## Yes we could
+sw_films %>% map_int(., ~length(.x$starships))
 ```
 
-> Insert Answer
+> The first line looks at all values under 'starship' across the dataset, then pulls the length
+
+> The second, loads in all the values then pulls starship values and lengths.
+
+> The third, same as above but the df is piped in. 
 
 
 
@@ -117,11 +126,11 @@ We will use the third method from the previous section to extract out the inform
 ```{r}
 sw_ships_1 <- sw_films %>% {
   tibble(
-    title = map____(., "title"), #character
-    episode = map____(., "episode_id"), #numeric
-    starships = map____(., ~length(.x$starships)), #numeric
-    vehicles = map____(., ~length(.x$vehicles)), #numeric
-    planets = map____(., ~length(.x$planets)) #numeric
+    title = map_chr(., "title"), #character
+    episode = map_dbl(., "episode_id"), #numeric
+    starships = map_dbl(., ~length(.x$starships)), #numeric
+    vehicles = map_dbl(., ~length(.x$vehicles)), #numeric
+    planets = map_dbl(., ~length(.x$planets)) #numeric
   )}
 sw_ships_1
 ```
@@ -129,15 +138,17 @@ sw_ships_1
 Let's do a bit more data cleaning to 1) assign the Trilogy classification to each episode, 2) calculate the total number of starships (which have hyperdrive) and vehicles (which do not have hyperdrive), and 3) calculate the proportion of total ships that have hyperdrive. Fill in the missing codes.
 
 ```{r}
-sw_ships <- sw_ships_1 ____  
+sw_ships <- sw_ships_1 %>%  
   #create a new variable called trilogy
-  ____(trilogy = case_when(episode %in% 1:3 ~ trilogies[1],
+  mutate(trilogy = case_when(episode %in% 1:3 ~ trilogies[1],
                              episode %in% 4:6 ~ trilogies[2],
                              episode %in% 7 ~ trilogies[3])) %>% 
   #create a new variable called total_ships which adds vehicles and starships together
-  ____(total_ships = vehicles + starships) %>%  
+  mutate(total_ships = vehicles + starships) %>%  
   #create a new variable called prop that calculate the percent hyperdrive
-  ____(prop = starships / total_ships * 100) 
+  mutate(prop = starships / total_ships * 100) 
+
+sw_ships
 ```
 
 
@@ -148,10 +159,10 @@ Now, let's make a plot examining how often hyperdrive ships appear in each episo
 ```{r}
 sw_ships %>% 
   #be sure to order titles by order/episode
-  ggplot(aes(y = ____(title, desc(episode)), 
+  ggplot(aes(y = fct_reorder(title, desc(episode)), 
              x = prop)) + 
   #we want bars but our data is already summarized!
-  geom_____(aes(fill = trilogy)) + 
+  geom_col(aes(fill = trilogy)) + 
   labs(
     title = "The Rise of Hyperdrive",
     subtitle = "Percentage of Ships with Hyperdrive Capability"
@@ -160,7 +171,7 @@ sw_ships %>%
   scale_x_continuous(labels = scales::label_percent(scale = 1)) +
   theme_minimal() +
   #what aesthetic do we modify to change the bar color
-  scale______viridis_d(end = 0.8) +
+  scale_color_viridis_d(end = 0.8) +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         legend.position = "bottom",
@@ -172,7 +183,7 @@ sw_ships %>%
 
 Which movie has the second highest percentage of Hyperdrive ships?
 
-> Insert Answer Here
+>  A New Hope
 
 
 
@@ -187,9 +198,9 @@ sw_ships %>%
   ggplot(aes(x = total_ships, 
              y = starships)) +
   #make points
-  geom_____(aes(color = trilogy)) +
+  geom_point(aes(color = trilogy)) +
   #fit a model
-  geom_____(method = "lm") +
+  geom_smooth(method = "lm") +
   #what does geom_text() do?
   geom_text(aes(label = title), 
             vjust = -1, 
@@ -199,7 +210,7 @@ sw_ships %>%
        subtitle = "The Number of Ships with Hyperdrive vs Total Ships") +
   theme_minimal() +
   #what aesthetic do we want to modify the color of points?
-  scale______viridis_d(end = 0.8) +
+  scale_color_viridis_d(end = 0.8) +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         legend.position = "bottom",
@@ -210,7 +221,7 @@ sw_ships %>%
 
 What do you notice about the use of hyperdrive type vehicles in the episodes?
 
-> Insert Answer
+> The rate of hyperdrive ships increase over time. 
 
 
 ## Part 2: The Physical Features of Star Wars Characters
@@ -227,10 +238,10 @@ We want to extract out `name`, `height`, and `mass` as `character` vectors (for 
 ```{r}
 sw_peeps <- sw_people %>%  {
   tibble(
-    name = ____(., "name"),  #character
-    height = ____(., "height"), #character
-    mass = ____(., "mass"), #character
-    films = map____(., "films") #list
+    name = map_chr(., "name"),  #character
+    height = map_chr(., "height"), #character
+    mass = map_chr(., "mass"), #character
+    films = map(., "films") #list
   )}
 sw_peeps
 ```
@@ -240,9 +251,9 @@ Notice that the `films` column contains lists of urls for each film reference. L
 ```{r}
 film_names <- sw_films %>% {
   tibble(
-    episode_id = ____(., "episode_id"), #double
-    episode_name = ____(., "title"), #character
-    url = ____(., "url") #character
+    episode_id = map_dbl(., "episode_id"), #double
+    episode_name = map_chr(., "title"), #character
+    url = map_chr(., "url") #character
   )}
 film_names
 ```
@@ -260,16 +271,16 @@ Now we can finish cleaning up our data by doing the following:
 ```{r}
 sw_peeps2 <- sw_peeps %>% 
   #use a function from readr to extract the numbers and replace "unknown" with na
-  mutate(height = parse_____(height, na = "unknown"),
-         mass = parse_____(mass, na = "unknown")) %>%
+  mutate(height = parse_double(height, na = "unknown"),
+         mass = parse_double(mass, na = "unknown")) %>%
   #unnest the lists in films
-  ____(cols = c("films")) %>% 
+  unnest(cols = c("films")) %>% 
   #join the film data with episodes names to the people data
-  _____join(film_names, by = c("films" = "url")) %>% 
+  left_join(film_names, by = c("films" = "url")) %>% 
   #remove the `films` url from the data frame
-  ____(-films) %>% 
+  select(-films) %>% 
   #add the variable trilogy
-  ____(trilogy = case_when(episode_id %in% 1:3 ~ trilogies[1],
+  mutate(trilogy = case_when(episode_id %in% 1:3 ~ trilogies[1],
                            episode_id %in% 4:6 ~ trilogies[2],
                            episode_id %in% 7   ~ trilogies[3]))
 sw_peeps2
@@ -283,9 +294,9 @@ We can now create a plot of height and mass by trilogy group to see if the physi
 sw_peeps2 %>% 
   filter(name != "Jabba Desilijic Tiure") %>% #major outlier removed
   #map the correct aesthetics
-  ggplot(aes(x = ____, 
-             y = ____, 
-             color = ____))+
+  ggplot(aes(x = height, 
+             y = mass, 
+             color = trilogy))+
   geom_point(position = "jitter") +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Height of Character (cm)",
@@ -302,10 +313,37 @@ sw_peeps2 %>%
 Write some code to identify who is is the heaviest (look at the graph to help guide this) Star Wars character (excluding Jabba Desilijic Tiure).
 
 ```{r}
+sw_peeps2 %>% 
+  filter(name != "Jabba Desilijic Tiure") %>% #major outlier removed
+  #map the correct aesthetics
+  ggplot(aes(x = height, 
+             y = mass, 
+             color = trilogy))+
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Height of Character (cm)",
+       y = "Mass of Character (kg)",
+       color = "Trilogy Group",
+       title = "Character Characteristics in Star Wars") +
+  theme_minimal() +
+  scale_color_viridis_d(end = 0.8)+
+  #what does geom_text() do?
+  geom_text(aes(label = name), 
+            vjust = -1, 
+            hjust = "inward", 
+            size = 2)
+```
+
+
+```{r}
+
+sort_by( sw_peeps2, mass )
+
 
 ```
 
->Insert Answer Here
+
+> Grievous
 
 
 
