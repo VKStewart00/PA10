@@ -334,15 +334,6 @@ sw_peeps2 %>%
             size = 2)
 ```
 
-
-```{r}
-
-sort_by( sw_peeps2, mass )
-
-
-```
-
-
 > Grievous
 
 
