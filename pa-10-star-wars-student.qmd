@@ -1,6 +1,6 @@
 ---
 title: "PA 10: Exploring the Star Wars Universe"
-author: "Instructions"
+author: "Van, Cherie"
 format: 
   html: default
   gfm: default
@@ -69,18 +69,21 @@ How do the following two codes compare?
 
 ```{r}
 sw_films[[4]][["title"]]
+
 sw_films %>% pluck(4,"title")
 ```
 
-> Insert Answer Here
+> The first is looking though the dataset and searching for the title in the fourth dataframe.
+
+> The second is pulling the title from the fourth dataset. 
 
 Suppose we want to pull out just the titles as a character vector, select the correct code (comment out the rest) to perform this action. You may want to run each line of code one at a time (remember `Ctrl + Enter` for Windows with your cursor on that line of code).
 
 ```{r}
 #comment out the incorrect codes
-sw_films %>% map("title")
+## 'sw_films %>% map("title")
 sw_films %>% map_chr("title")
-sw_films %>% map_dfc("title")
+## 'sw_films %>% map_dfc("title")
 ```
 
 Suppose we want to apply a function to count the number of specific kinds of ships and vehicles in our data
