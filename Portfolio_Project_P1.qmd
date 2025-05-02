@@ -1,0 +1,78 @@
+---
+title: "Portfolio Project - Part 1"
+author: "Van Stewart"
+format: html
+---
+
+## **1. Data Description**
+
+## **1.1 Data Source**
+
+-   The dataset I will use is: **\[Carbon Majors Emissions Data\]**.
+-   It comes from: **\[TidyTuesday, Carbon Majors\]**.
+-   I retrieved this dataset from **\[URL\]**.
+
+## **1.2 Description of Data**
+
+-   The dataset includes **\[12,551\]** rows and **\[7\]** columns.
+-   Key variables:
+    -   `variable1`: **\[total_emissions\]**
+    -   `variable2`: **\[parent_entity\]**
+    -   `variable3`: **\[Production unit\]**
+    -   (Add more if needed)
+-   Data types:
+    -   **\[Categorical, Numerical\]**
+-   Initial observations:
+    -   **with a simple sort I see that a coal company has the most co2 emissions**
+
+## **1.3 Research Questions**
+
+-   **Q1:** **\[What year has the most co2 emissions\]**
+-   **Q2:** **\[What industry has the most co2 emissions\]**
+-   **Q3:** **\[What country has the most co2 emissions\]**
+
+------------------------------------------------------------------------
+
+# **2. Data Visualization Plan**
+
+## **2.1 Desired Visualizations**
+
+-   **Visualization 1:** **\[line plot\]**
+-   **Visualization 2:** **\[bar chart\]**
+
+## **2.2 What I Want to Highlight**
+
+-   **Key Trends or Patterns:** **\[co2 emissions increasing year over year\]**
+-   **Comparison Factors:** **\[year, company, parent type\]**
+-   **Special Formatting Needs:** **\[color\]**
+
+## **2.3 Missing Data & Challenges**
+
+-   **Are there missing values?** **\[No\]**
+-   **Will I need to clean or restructure variables?** **\[Yes, the units are not all equal\]**
+-   **Are there additional datasets I need to join?** **\[Yes, I may add global temperture\]**
+
+------------------------------------------------------------------------
+
+# **3. Data Cleaning Plan**
+
+# **Does my dataset require any of the following transformations?**
+
+-   **Reformat variables (dates, factors, strings)?** **\[No\]**
+-   **Handle missing data (non-NA codes like `-99`)?** **\[No\]**
+-   **Filter unnecessary rows?** **\[No\]**
+-   **Create new calculated variables?** **\[Maybe Avrege Emissions\]**
+-   **Join with another dataset?** **\[Maybe add global temperture data\]**
+-   **Exclude irrelevant columns?** **\[Yes\]**
+-   **Pivot (long-to-wide or vice versa)?** **\[No\]**
+-   **Summarize key variables (grouping, aggregating)?** **\[Yes\]**
+-   **Fix other data inconsistencies?** **\[No\]**
+
+------------------------------------------------------------------------
+
+# **Next Steps**
+
+-   **Download and inspect dataset**
+-   **Write initial cleaning scripts**
+-   **Create first draft visualizations**
+-   **Iterate based on findings**

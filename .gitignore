@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+=======
+/.quarto/
+.Rproj.user
+>>>>>>> 91a4daa (Grouped data and made a graph)

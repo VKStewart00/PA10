@@ -1,0 +1,18 @@
+project:
+  type: website
+
+website:
+  title: "My Portfolio"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Part 1"
+        href: Portfolio_Project_P1.qmd
+
+format:
+  html:
+    theme: flatly
+    toc: true
+
+

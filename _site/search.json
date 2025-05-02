@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "Portfolio_Project_P1.html#data-source",
+    "href": "Portfolio_Project_P1.html#data-source",
+    "title": "Portfolio Project - Part 1",
+    "section": "1.1 Data Source",
+    "text": "1.1 Data Source\n\nThe dataset I will use is: [Carbon Majors Emissions Data].\nIt comes from: [TidyTuesday, Carbon Majors].\nI retrieved this dataset from [URL]."
+  },
+  {
+    "objectID": "Portfolio_Project_P1.html#description-of-data",
+    "href": "Portfolio_Project_P1.html#description-of-data",
+    "title": "Portfolio Project - Part 1",
+    "section": "1.2 Description of Data",
+    "text": "1.2 Description of Data\n\nThe dataset includes [12,551] rows and [7] columns.\nKey variables:\n\nvariable1: [total_emissions]\nvariable2: [parent_entity]\nvariable3: [Production unit]\n(Add more if needed)\n\nData types:\n\n[Categorical, Numerical]\n\nInitial observations:\n\nwith a simple sort I see that a coal company has the most co2 emissions"
+  },
+  {
+    "objectID": "Portfolio_Project_P1.html#research-questions",
+    "href": "Portfolio_Project_P1.html#research-questions",
+    "title": "Portfolio Project - Part 1",
+    "section": "1.3 Research Questions",
+    "text": "1.3 Research Questions\n\nQ1: [What year has the most co2 emissions]\nQ2: [What industry has the most co2 emissions]\nQ3: [What country has the most co2 emissions]"
+  },
+  {
+    "objectID": "Portfolio_Project_P1.html#desired-visualizations",
+    "href": "Portfolio_Project_P1.html#desired-visualizations",
+    "title": "Portfolio Project - Part 1",
+    "section": "2.1 Desired Visualizations",
+    "text": "2.1 Desired Visualizations\n\nVisualization 1: [line plot]\nVisualization 2: [bar chart]"
+  },
+  {
+    "objectID": "Portfolio_Project_P1.html#what-i-want-to-highlight",
+    "href": "Portfolio_Project_P1.html#what-i-want-to-highlight",
+    "title": "Portfolio Project - Part 1",
+    "section": "2.2 What I Want to Highlight",
+    "text": "2.2 What I Want to Highlight\n\nKey Trends or Patterns: [co2 emissions increasing year over year]\nComparison Factors: [year, company, parent type]\nSpecial Formatting Needs: [color]"
+  },
+  {
+    "objectID": "Portfolio_Project_P1.html#missing-data-challenges",
+    "href": "Portfolio_Project_P1.html#missing-data-challenges",
+    "title": "Portfolio Project - Part 1",
+    "section": "2.3 Missing Data & Challenges",
+    "text": "2.3 Missing Data & Challenges\n\nAre there missing values? [No]\nWill I need to clean or restructure variables? [Yes, the units are not all equal]\nAre there additional datasets I need to join? [Yes, I may add global temperture]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to My Portfolio",
+    "section": "",
+    "text": "Welcome to my portfolio site. Here you’ll find my work on data analysis projects, including visualizations and insights.\n\nView my project: Portfolio_Project_Part 1"
+  },
+  {
+    "objectID": "index.html#hello",
+    "href": "index.html#hello",
+    "title": "Welcome to My Portfolio",
+    "section": "",
+    "text": "Welcome to my portfolio site. Here you’ll find my work on data analysis projects, including visualizations and insights.\n\nView my project: Portfolio_Project_Part 1"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "dataWork.html",
+    "href": "dataWork.html",
+    "title": "DataPrep",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n# Option 1: tidytuesdayR package \n## install.packages(\"tidytuesdayR\")\n\ntuesdata &lt;- tidytuesdayR::tt_load('2024-05-21')\n\n---- Compiling #TidyTuesday Information for 2024-05-21 ----\n--- There is 1 file available ---\n\n\n── Downloading files ───────────────────────────────────────────────────────────\n\n  1 of 1: \"emissions.csv\"\n\n## OR\ntuesdata &lt;- tidytuesdayR::tt_load(2024, week = 21)\n\n---- Compiling #TidyTuesday Information for 2024-05-21 ----\n--- There is 1 file available ---\n\n\n── Downloading files ───────────────────────────────────────────────────────────\n\n  1 of 1: \"emissions.csv\"\n\nemissions &lt;- tuesdata$emissions\n\n\ncolorsVanLikes &lt;- c(\n  \"dodgerblue2\", \n  \"#E31A1C\", \n  \"green4\",\n  \"#6A3D9A\", \n  \"skyblue2\", \n  \"#FB9A99\", \n  \"#CAB2D6\",\n  \"#FDBF6F\", \n  \"maroon\", \n  \"orchid1\", \n  \"deeppink1\", \n  \"blue1\",\n  \"steelblue4\",\n  \"darkturquoise\", \n  \"green1\", \n  \"darkorange4\",\n  \"brown\"\n)\n\n\nemissions_clean &lt;- emissions |&gt;\n  filter( commodity == \"Oil & NGL\",\n          year &gt;= 1970\n          )|&gt;\n  select( -c( parent_type, \n              production_value, \n              production_unit\n              ))|&gt;\n  mutate(total = as.numeric(total_emissions_MtCO2e)) |&gt;\n  group_by(parent_entity)|&gt;\n  mutate(avg_emissions = mean(total_emissions_MtCO2e))|&gt;\n  filter( avg_emissions &gt;= 300)|&gt;\n  ungroup()\n\n\nemissions_clean|&gt;\n  ggplot( aes( x = year,\n               y = total_emissions_MtCO2e,\n               group = parent_entity,\n               color = parent_entity\n               ))+\n  theme_minimal()+\n  scale_color_manual(values = colorsVanLikes)+\n  geom_line()"
+  }
+]
