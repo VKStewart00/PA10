@@ -3,7 +3,37 @@ title: "Welcome to My Portfolio"
 format: html
 ---
 
-## Hello!
+# **Van_Stewart_Portfolio**
+
+Van Stewart is a California State University Undergraduate studying Marine and Data Science.
+
+## **Education**
+
+Marine Science: California State University Monterrey Bay, 2024 - Current
+
+Relevant coursework:
+
+Marine Science 370: Bio - Physical Oceanography
+
+Marine Science 345: Marine Biodiversity
+
+Statistics 250: Applied Stat: Sci Tech
+
+Marine Science for transfer: Diablo Valley College 2021-2024
+
+Relevant coursework:
+
+Biology 126: Ecology and Field Biology
+
+Biology 130: Cellular & Molecular biology
+
+Biology 131: Evolution & Ecology
+
+General Chemistry I & II
+
+Oceanography 102: Oceanography with Lab
+
+## **Final Portfolio for Stat 210**
 
 Welcome to my portfolio site. Here you’ll find my work on data analysis projects, including visualizations and insights.
 
