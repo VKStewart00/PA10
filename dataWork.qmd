@@ -43,17 +43,21 @@ colorsVanLikes <- c(
   "darkturquoise", 
   "green1", 
   "darkorange4",
-  "brown"
+  "brown",
+  "cyan",
+  "cyan4",
+  "coral",
+  "darkgreen",
+  "blue",
+  "red4",
+  "green4"
 )
-
-
-
 ```
 
 ```{r}
 
 
-emissions_clean <- emissions |>
+emissionsCleanParent <- emissions |>
   filter( commodity == "Oil & NGL",
           year >= 1970
           )|>
@@ -67,11 +71,23 @@ emissions_clean <- emissions |>
   filter( avg_emissions >= 300)|>
   ungroup()
 
+emissionsCleanCommodity <- emissions |>
+  filter( year >= 1970
+          )|>
+  select( -c( parent_type, 
+              production_value, 
+              production_unit
+              ))|>
+  mutate(total = as.numeric(total_emissions_MtCO2e)) |>
+  group_by(year, commodity)|>
+  mutate(avg_emissions = mean(total_emissions_MtCO2e))|>
+  filter( avg_emissions >= 0)|>
+  ungroup()
 ```
 
 ```{r}
 
-emissions_clean|>
+emissionsCleanParent|>
   ggplot( aes( x = year,
                y = total_emissions_MtCO2e,
                group = parent_entity,
@@ -81,5 +97,13 @@ emissions_clean|>
   scale_color_manual(values = colorsVanLikes)+
   geom_line()
 
-
+emissionsCleanCommodity|>
+  ggplot( aes( x = year,
+               y = avg_emissions,
+               group = commodity,
+               color = commodity
+               ))+
+  theme_minimal()+
+  scale_color_manual(values = colorsVanLikes)+
+  geom_line()
 ```
