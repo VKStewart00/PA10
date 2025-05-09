@@ -8,4 +8,4 @@ format: html
 Welcome to my portfolio site. Here you’ll find my work on data analysis projects, including visualizations and insights.
 
 -   View my project: [Portfolio_Project_Part 1](Portfolio_Project_P1.qmd)
--   Check my data [dataWork](dataWork.qmd)
+-   Cleaning my data [dataWork](dataWork.qmd)
